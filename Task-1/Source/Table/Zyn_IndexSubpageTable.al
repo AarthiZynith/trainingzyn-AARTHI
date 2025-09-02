@@ -1,0 +1,19 @@
+table 50128 IndexSubpagetable
+{
+    fields{
+        field(1;code;code[10])
+        {DataClassification=ToBeClassified;}
+        field(2;EntryNo;Integer){
+            DataClassification=ToBeClassified;
+        }
+        field(3;Year;Integer){
+            DataClassification=ToBeClassified;
+        }
+        field(4;value;Decimal){
+            DataClassification=ToBeClassified;
+        }
+    }
+    keys{
+        key(PK;code,EntryNo){}
+    }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "7eed439d-433d-4e1f-b0f4-75dd92c0bd1c",
+  "name": "ALProject5",
+  "publisher": "Default Publisher",
+  "version": "1.0.0.2",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+
+     {
+    "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+    "name": "Base Application",
+    "publisher": "Microsoft",
+    "version": "15.0.0.0"
+  }
+
+  ],
+  "screenshots": [],
+  "platform": "15.0.0.1",
+  "application": "15.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50500
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "15.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
