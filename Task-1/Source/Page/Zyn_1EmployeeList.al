@@ -26,6 +26,16 @@ page 50164 EmployeeList
                 }
             }
         }
+
+        area(FactBoxes)
+        {
+
+            part("AssetHistory"; AssetHistoryFactBox)
+            {
+                ApplicationArea = All;
+                SubPageLink = EmployeeID = field(EmployeeID);
+            }
+        }
     }
 
     actions
