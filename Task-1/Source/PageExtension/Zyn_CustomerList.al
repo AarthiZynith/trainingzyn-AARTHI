@@ -12,6 +12,10 @@ pageextension 50133 "Customer List Extension" extends "Customer List"
                     ApplicationArea = All;
                     SubPageLink = "No." = field("No.");
                 }
+                part(ActiveSubscriptionstatus;SubscriptionFactbox){
+                    ApplicationArea=All;
+                    //SubPageLink="No."=field("No.");
+                }
             }
         }
 

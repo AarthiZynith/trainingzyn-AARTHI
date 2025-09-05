@@ -6,9 +6,9 @@ page 50186 AssetTypeListPage
     UsageCategory = Administration;
     SourceTable = AssetType;
     CardPageId=AssetTypeCardPage;
-    // InsertAllowed=true;
+     InsertAllowed=false;
     // ModifyAllowed=false;
-    // Editable=false;
+    Editable=false;
   
     layout
     {

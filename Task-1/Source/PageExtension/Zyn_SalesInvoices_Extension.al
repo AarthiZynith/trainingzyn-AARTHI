@@ -51,6 +51,7 @@ pageextension 50129 "SalesInvoiceExt" extends "Sales Invoice"
                     end;
  
                 }
+                
             }
  
             part("Extended Text Part"; SalesInvoiceSubPageextn)

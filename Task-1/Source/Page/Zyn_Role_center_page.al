@@ -15,6 +15,8 @@ page 50120 "Visit Manager Role Center"
             {
 
             }
+            part("Active subscription"; "Subscription Cue Page") { }
+
         }
     }
 
@@ -29,7 +31,6 @@ page 50120 "Visit Manager Role Center"
             }
 
         }
-
         area(Sections)
         {
             group("Employee Asset Management")
@@ -44,54 +45,85 @@ page 50120 "Visit Manager Role Center"
                     RunObject = page AssetsListPage;
                     ApplicationArea = All;
                 }
-                action(EmployeeAssetsList){
-                    RunObject=Page EmployeeAssetsListPage;
-                    ApplicationArea=All;
+                action(EmployeeAssetsList)
+                {
+                    RunObject = Page EmployeeAssetsListPage;
+                    ApplicationArea = All;
                 }
             }
 
 
-            group("Expense Management System"){
-                action(ExpenseList){
-                    RunObject=Page ExpenseListPage;
-                    ApplicationArea=All;
+            group("Expense Management System")
+            {
+                action(ExpenseList)
+                {
+                    RunObject = Page ExpenseListPage;
+                    ApplicationArea = All;
                 }
-                action(ExpenseCategoryList){
-                    RunObject=page ExpenseCategoryListPage;
-                    ApplicationArea=All;
-                }
-            }
-            group("Budget Management System"){
-                action(BudgetList){
-                    RunObject=page BudgetList;
-                    ApplicationArea=All;
+                action(ExpenseCategoryList)
+                {
+                    RunObject = page ExpenseCategoryListPage;
+                    ApplicationArea = All;
                 }
             }
-            group("Income Management System "){
-                action(IncomePage){
-                    RunObject=page IncomeListPage;
-                    ApplicationArea=All;
-                }
-                action(Income){
-                    RunObject=page IncomeCategoryListPage;
-                    ApplicationArea=All;
+            group("Budget Management System")
+            {
+                action(BudgetList)
+                {
+                    RunObject = page BudgetList;
+                    ApplicationArea = All;
                 }
             }
-            group("Employee Leave Management"){
+            group("Income Management System ")
+            {
+                action(IncomePage)
+                {
+                    RunObject = page IncomeListPage;
+                    ApplicationArea = All;
+                }
+                action(Income)
+                {
+                    RunObject = page IncomeCategoryListPage;
+                    ApplicationArea = All;
+                }
+            }
+            group("Employee Leave Management")
+            {
 
-                Action(EmployeeList){
-                    RunObject=page "Employee List";
-                    ApplicationArea=All;
+                Action(EmployeeList)
+                {
+                    RunObject = page "Employee List";
+                    ApplicationArea = All;
                 }
-                action(EmployeeLeaveRequestList){
-                    RunObject=page  leaveRequestList;
-                    ApplicationArea=All;
+                action(EmployeeLeaveRequestList)
+                {
+                    RunObject = page leaveRequestList;
+                    ApplicationArea = All;
                 }
-                action(EmployeeLeaveCategoryList){
-                    RunObject=page leaveCategoryList;
-                    ApplicationArea=All;
+                action(EmployeeLeaveCategoryList)
+                {
+                    RunObject = page leaveCategoryList;
+                    ApplicationArea = All;
+                }
+            }
+
+            group("Subscription Billing Management")
+            {
+                action(SubscriptionListPage)
+                {
+                    RunObject = page SubscriptionListPage;
+                    ApplicationArea = All;
+                }
+                action(SubscriptionPlanListPage)
+                {
+                    ApplicationArea = All;
+                    RunObject = page SubscriptionPlanlist;
                 }
             }
         }
     }
+
+
+
+
 }
