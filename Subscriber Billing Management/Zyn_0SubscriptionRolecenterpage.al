@@ -43,6 +43,8 @@ page 50221 "Subscription Cue Page"
                     end;
                 }
             }
+
+            
         }
     }
     local procedure RevenueGenerated(): Decimal
@@ -94,4 +96,6 @@ page 50221 "Subscription Cue Page"
     var
         Revenue: Decimal;
         active: Integer;
+
+        
 }

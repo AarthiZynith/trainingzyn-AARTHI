@@ -16,10 +16,10 @@ page 50120 "Visit Manager Role Center"
 
             }
             part("Active subscription"; "Subscription Cue Page") { }
+            part("SubscriptionNotification";Zyn_NotificationCustomPage){}
 
         }
     }
-
     actions
     {
         area(Embedding)
@@ -120,10 +120,27 @@ page 50120 "Visit Manager Role Center"
                     RunObject = page SubscriptionPlanlist;
                 }
             }
+
         }
+        
+        }
+//             cues{
+//             modify("MY Cues"){
+// addlast{
+//              cue("Subscription Reminders")
+//             {
+//                 ApplicationArea = All;
+//                 Caption = 'Subscription Reminders';
+//                 Image = Reminder;
+//                 DrillDownPageId = 50102; // Opens the list page
+//                 DataItem = "Subscription Reminder"; // Table for notifications
+//                 DataItemLink = "Date Created = FIELD(CurrentDateTime())"; // Filter for today
+//             }
+//         }
+//         }
+//         }
     }
 
 
 
 
-}

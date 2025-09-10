@@ -38,6 +38,8 @@ table 50205 "Customer Subscription"
         field(6; "End Date"; Date) { DataClassification = ToBeClassified; }
         field(7; "Next Bill Date"; Date) { DataClassification = ToBeClassified; }
         field(8; "Status"; Enum CustomerSubscriptionStatusEnum) { DataClassification = ToBeClassified; }
+        field(9;NextRenewalDate;Date){DataClassification=ToBeClassified;}
+        field(10;ReminderSent;Boolean){DataClassification=ToBeClassified;}
     }
 
     keys

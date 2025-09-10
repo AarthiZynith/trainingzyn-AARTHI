@@ -1,4 +1,4 @@
-enum 50216 CustomerSubscriptionStatusnum
+enum 50219 CustomerSubscriptionStatusEnum
 {
     Extensible = true;
     
