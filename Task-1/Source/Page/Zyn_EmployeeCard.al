@@ -4,41 +4,42 @@ page 50165 EmployeeCard
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = EmployeeTable;
-    
+
     layout
     {
         area(Content)
         {
             group(GroupName)
             {
-                field(EmployeeID;Rec.EmployeeID)
+                field(EmployeeID; Rec.EmployeeID)
                 {
-                    ApplicationArea=all;
+                    ApplicationArea = all;
                 }
-                field(Name;Rec.Name){ApplicationArea=All;}
-                field(EmployeeRole;Rec.EmployeeRole){ApplicationArea=all;}
-                field(Department;Rec.Department){
-                    ApplicationArea=all;
+                field(Name; Rec.Name) { ApplicationArea = All; }
+                field(EmployeeRole; Rec.EmployeeRole) { ApplicationArea = all; }
+                field(Department; Rec.Department)
+                {
+                    ApplicationArea = all;
                 }
             }
         }
     }
-    
+
     // actions
     // {
     //     area(Processing)
     //     {
     //         action(ActionName)
     //         {
-                
+
     //             trigger OnAction()
     //             begin
-                    
+
     //             end;
     //         }
     //     }
     // }
-    
+
     // var
     //     myInt: Integer;
 }
