@@ -1,10 +1,17 @@
-enum 50219 CustomerSubscriptionStatusEnum
+enum 50219 Zyn_CustomerSubscriptionStatus
 {
     Extensible = true;
-    
+
     value(0; Active)
     {
+        Caption = ' Active';
     }
-    value(1;Inactive){}
-    value(2;Expired){}
+    value(1; Inactive)
+    {
+        Caption = 'Inactive';
+    }
+    value(2; Expired)
+    {
+        Caption = ' Expired';
+    }
 }

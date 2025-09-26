@@ -1,4 +1,4 @@
-table 50205 "Customer Subscription"
+table 50205 Zyn_CustomerSubscription
 {
     DataClassification = ToBeClassified;
 
@@ -8,16 +8,19 @@ table 50205 "Customer Subscription"
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
+            Caption='Subscription ID';
         }
         field(2; "Customer ID"; Code[100])
         {
             DataClassification = ToBeClassified;
             TableRelation = Customer."No.";
+            Caption='Customer ID';
         }
         field(3; "Plan ID"; Code[100])
         {
             DataClassification = ToBeClassified;
-            TableRelation = PlanTable.PlanID;
+            Caption='Plan ID';
+            TableRelation = Zyn_PlanTable.PlanID;
         }
         field(4; "Start Date"; Date)
         {
@@ -34,12 +37,30 @@ table 50205 "Customer Subscription"
 
             end;
         }
-        field(5; "Duration (Months)"; Integer) { DataClassification = ToBeClassified; }
-        field(6; "End Date"; Date) { DataClassification = ToBeClassified; }
-        field(7; "Next Bill Date"; Date) { DataClassification = ToBeClassified; }
-        field(8; "Status"; Enum CustomerSubscriptionStatusEnum) { DataClassification = ToBeClassified; }
-        field(9;NextRenewalDate;Date){DataClassification=ToBeClassified;}
-        field(10;ReminderSent;Boolean){DataClassification=ToBeClassified;}
+        field(5; "Duration (Months)"; Integer)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(6; "End Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(7; "Next Bill Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(8; "Status"; Enum Zyn_CustomerSubscriptionStatus)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(9; NextRenewalDate; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(10; ReminderSent; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

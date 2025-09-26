@@ -1,33 +1,50 @@
-page 50207 SubscriptionListPage
+page 50207 Zyn_SubscriptionList
 {
     PageType = list;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable = "Customer Subscription";
-    Editable=false;
-    InsertAllowed=true;
-   // ModifyAllowed=true;
-    CardPageId=SubscriptionCardPage;
-    
+    SourceTable = Zyn_CustomerSubscription;
+    Editable = false;
+    InsertAllowed = true;
+    CardPageId = Zyn_SubscriptionCard;
+
     layout
     {
         area(Content)
         {
             repeater(Group)
             {
-                field("Subscription ID";Rec."Subscription ID")
+                field("Subscription ID"; Rec."Subscription ID")
                 {
-                    ApplicationArea=All;
+
                 }
-                field("Customer ID";Rec."Customer ID"){ApplicationArea=All;}
-                field("Plan ID";Rec."Plan ID"){ApplicationArea=All;}
-                field("Start Date";Rec."Start Date"){ApplicationArea=All;}
-                field("End Date";Rec."End Date"){ApplicationArea=All;}
-                field(Status;Rec.Status){ApplicationArea=All;}
-                field("Next Bill Date";Rec."Next Bill Date"){ApplicationArea=All;}
+                field("Customer ID"; Rec."Customer ID")
+                {
+
+                }
+                field("Plan ID"; Rec."Plan ID")
+                {
+
+                }
+                field("Start Date"; Rec."Start Date")
+                {
+
+                }
+                field("End Date"; Rec."End Date")
+                {
+
+                }
+                field(Status; Rec.Status)
+                {
+
+                }
+                field("Next Bill Date"; Rec."Next Bill Date")
+                {
+
+                }
             }
         }
     }
-    
-   
+
+
 }

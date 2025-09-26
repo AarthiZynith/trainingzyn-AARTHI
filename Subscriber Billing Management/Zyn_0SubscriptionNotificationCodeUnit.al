@@ -3,7 +3,7 @@ codeunit 50211 "Zyn_NotificationCodeunit"
     procedure NotifySubscriptionTasks()
     var
         notification: Notification;
-        subscriptionTask: Record "Customer Subscription";
+        subscriptionTask: Record Zyn_CustomerSubscription;
         MessageText: Text;
         TodayDate: Date;
         TargetDate: Date;
@@ -12,7 +12,7 @@ codeunit 50211 "Zyn_NotificationCodeunit"
         TargetDate := CalcDate('<+15D>', TodayDate); // 15 days from today
         subscriptionTask.Reset();
         subscriptionTask.SetRange(Status, subscriptionTask.Status::Active);
-       // subscriptionTask.SetRange("End Date", 0D, TargetDate); // End Date <= TargetDate
+        // subscriptionTask.SetRange("End Date", 0D, TargetDate); // End Date <= TargetDate
         if subscriptionTask.FindSet() then begin
             repeat
                 if (subscriptionTask."End Date" = TargetDate) then begin

@@ -1,4 +1,4 @@
-codeunit 50210 "SubscriptionInvoices"
+codeunit 50210 Zyn_SubscriptionInvoices
 {
     trigger OnRun()
     begin
@@ -7,10 +7,10 @@ codeunit 50210 "SubscriptionInvoices"
 
     procedure CreateRecurringInvoices(BillDate: Date)
     var
-        SubRec: Record "Customer Subscription";
+        SubRec: Record Zyn_CustomerSubscription;
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
-        PlanRec: Record PlanTable;
+        PlanRec: Record Zyn_PlanTable;
         LineNo: Integer;
     begin
         SubRec.SetRange(Status, SubRec.Status::Active);
@@ -32,7 +32,7 @@ codeunit 50210 "SubscriptionInvoices"
                 SalesLine.Validate("Document No.", SalesHeader."No.");
                 SalesLine.Validate("Line No.", LineNo);
                 SalesLine.Validate(Type, SalesLine.Type::Item);
-                SalesLine.Validate("No.", '4000'); 
+                SalesLine.Validate("No.", '4000');
                 SalesLine.Validate(Quantity, 1);
                 SalesLine.Validate("Unit Price", PlanRec.PlanFee);
                 SalesLine.Insert(true);
@@ -45,5 +45,5 @@ codeunit 50210 "SubscriptionInvoices"
             until SubRec.Next() = 0;
     end;
 
-   
+
 }

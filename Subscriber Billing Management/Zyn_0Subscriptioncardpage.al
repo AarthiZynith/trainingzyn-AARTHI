@@ -1,45 +1,62 @@
-page 50208 SubscriptionCardPage
+page 50208 Zyn_SubscriptionCard
 {
     PageType = card;
     ApplicationArea = All;
-   // UsageCategory = Administration;
-    SourceTable = "Customer Subscription";
-    
+    SourceTable = Zyn_CustomerSubscription;
+
     layout
     {
         area(Content)
         {
             group(General)
             {
-                field("Subscription ID";Rec."Subscription ID")
+                field("Subscription ID"; Rec."Subscription ID")
                 {
-                    ApplicationArea=All;
+
                 }
-                field("Customer ID";Rec."Customer ID"){ApplicationArea=All;}
-                field("Plan ID";Rec."Plan ID"){ApplicationArea=All;}
-                field("Start Date";Rec."Start Date"){ApplicationArea=All;}
-                field("End Date";Rec."End Date"){ApplicationArea=All;}
-                field(Status;Rec.Status){ApplicationArea=All;}
-                field("Next Bill Date";Rec."Next Bill Date"){ApplicationArea=All;}
+                field("Customer ID"; Rec."Customer ID")
+                {
+
+                }
+                field("Plan ID"; Rec."Plan ID")
+                {
+
+                }
+                field("Start Date"; Rec."Start Date")
+                {
+
+                }
+                field("End Date"; Rec."End Date")
+                {
+
+                }
+                field(Status; Rec.Status)
+                {
+
+                }
+                field("Next Bill Date"; Rec."Next Bill Date")
+                {
+
+                }
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
         {
             action(ActionName)
             {
-                
+
                 trigger OnAction()
                 begin
-                    
+
                 end;
             }
         }
     }
-    
+
     var
         myInt: Integer;
 }

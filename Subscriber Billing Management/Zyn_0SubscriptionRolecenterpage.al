@@ -1,7 +1,7 @@
-page 50221 "Subscription Cue Page"
+page 50221 Zyn_SubscriptionCuePage
 {
     PageType = CardPart;
-    SourceTable = "Subscription Cue";
+    SourceTable = Zyn_SubscriptionCue;
     ApplicationArea = All;
     UsageCategory = Administration;
 
@@ -17,8 +17,8 @@ page 50221 "Subscription Cue Page"
                     DrillDown = true;
                     trigger OnDrillDown()
                     var
-                        SubPage: Page "SubscriptionListPage";
-                        SubRec: Record "Customer Subscription";
+                        SubPage: Page Zyn_SubscriptionList;
+                        SubRec: Record Zyn_CustomerSubscription;
                     begin
                         SubRec.SetRange(Status, SubRec.Status::Active);
                         SubPage.SetTableView(SubRec);
@@ -44,21 +44,22 @@ page 50221 "Subscription Cue Page"
                 }
             }
 
-            
+
         }
     }
     local procedure RevenueGenerated(): Decimal
     var
-        Cue: Record "Subscription Cue";
+        Cue: Record Zyn_SubscriptionCue;
     begin
         if Cue.Get(1) then
             exit(Cue."Revenue Generated")
         else
             exit(0);
     end;
+
     trigger OnOpenPage()
     var
-        Cue: Record "Subscription Cue";
+        Cue: Record ZYn_SubscriptionCue;
         SalesHdr: Record "Sales Header";
         SalesLine: Record "Sales Line";
         Revenue: Decimal;
@@ -85,17 +86,19 @@ page 50221 "Subscription Cue Page"
         Cue."Revenue Generated" := Revenue;
         Cue.Modify(true);
     end;
+
     trigger OnAfterGetCurrRecord()
     var
-        SubRec: Record "Customer Subscription";
+        SubRec: Record Zyn_CustomerSubscription;
     begin
         SubRec.Reset();
         SubRec.SetRange(Status, SubRec.Status::Active);
         active := SubRec.Count;
     end;
+
     var
         Revenue: Decimal;
         active: Integer;
 
-        
+
 }

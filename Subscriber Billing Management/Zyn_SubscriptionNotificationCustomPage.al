@@ -3,8 +3,8 @@ page 50213 Zyn_NotificationCustomPage
     PageType = ListPart;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable =NotificationCustomTable ;
-    
+    SourceTable = Zyn_NotificationCustom;
+
     layout
     {
         area(Content)
@@ -15,8 +15,8 @@ page 50213 Zyn_NotificationCustomPage
         }
     }
     trigger OnOpenPage()
-    var 
-    NotificationCodeUnit: Codeunit "Zyn_NotificationCodeunit";
+    var
+        NotificationCodeUnit: Codeunit "Zyn_NotificationCodeunit";
     begin
         NotificationCodeUnit.NotifySubscriptionTasks();
     end;

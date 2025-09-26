@@ -1,45 +1,58 @@
-page 50203 SubscriptionPlanlist
+page 50203 Zyn_SubscriptionPlanlist
 {
     PageType = list;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable = PlanTable;
-    Editable=false;
-    InsertAllowed=true;
-    CardPageId=SubscriptionPlanCardPage;
+    SourceTable = Zyn_PlanTable;
+    Editable = false;
+    InsertAllowed = true;
+    CardPageId = Zyn_SubscriptionPlanCard;
     layout
     {
         area(Content)
         {
             repeater(Group)
             {
-                field(PlanID;Rec.PlanID)
+                field(PlanID; Rec.PlanID)
                 {
-                    ApplicationArea=All;
+
                 }
-                field(PlanName;Rec.PlanName){ApplicationArea=All;}
-                field(PlanFee;Rec.PlanFee){ApplicationArea=All;}
-                field(Status;Rec.Status){ApplicationArea=All;}
-                field(Description;Rec.Description){ApplicationArea=All;}
+                field(PlanName; Rec.PlanName)
+                {
+                    
+                }
+                field(PlanFee; Rec.PlanFee)
+                {
+                    
+                }
+                field(Status; Rec.Status)
+                {
+                    
+                }
+                field(Description; Rec.Description)
+                {
+                    
+                }
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
         {
             action(SubscriptionList)
             {
-                
+
                 trigger OnAction()
-                var SubscriptionListapge:page SubscriptionListPage;
+                var
+                    SubscriptionListapge: page Zyn_SubscriptionList;
                 begin
                     SubscriptionListapge.RunModal();
                 end;
             }
         }
     }
-    
-   
+
+
 }
