@@ -13,7 +13,6 @@ pageextension 50109 Zyn_CustomernewCardExt extends "Customer Card"
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     begin
-        // CurrPage.Update(); // Flush user input into Rec
         if (isNewCustomer) and (Rec.Name = '') then begin
             Message('Please enter a customer name');
             exit(false)

@@ -13,8 +13,7 @@ tableextension 50100 Zyn_CustomerExtension extends Customer
             Caption = 'Credit Used';
             FieldClass = FlowField;
             CalcFormula = Sum("Sales Line"."Amount" WHERE(
-                "Sell-to Customer No." = FIELD("No.")
-            ));
+                "Sell-to Customer No." = FIELD("No.")));
             Editable = false;
         }
 

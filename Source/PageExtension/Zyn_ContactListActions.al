@@ -18,14 +18,11 @@ pageextension 50141 Zyn_ContactListExt extends "Contact List"
                 begin
 
                     ContactBusinessRelation.SetRange("Link to Table", ContactBusinessRelation."Link to Table"::Customer);
-
-
                     if ContactRec.FindSet() then
                         repeat
                             TempContactRec := ContactRec;
                             TempContactRec.Insert();
                         until ContactRec.Next() = 0;
-
                     Page.RunModal(Page::Zyn_ReadonlyContactsList, TempContactRec);
                 end;
             }
@@ -41,20 +38,13 @@ pageextension 50141 Zyn_ContactListExt extends "Contact List"
                     ContactBusinessRelation: Record "Contact Business Relation";
 
                 begin
-                    /*Clear(TempContactRec);
-                    TempContactRec.DeleteAll();
-
-                    // Adjust the filters based on your data structure
-                    ContactRec.SetRange("Company No.", '');*/
+                    ContactBusinessRelation.Reset();
                     ContactBusinessRelation.SetRange("Link to Table", ContactBusinessRelation."Link to Table"::Vendor);
-
-
                     if ContactRec.FindSet() then
                         repeat
                             TempContactRec := ContactRec;
                             TempContactRec.Insert();
                         until ContactRec.Next() = 0;
-
                     Page.RunModal(Page::Zyn_ReadonlyContactsList, TempContactRec);
                 end;
             }
@@ -70,23 +60,36 @@ pageextension 50141 Zyn_ContactListExt extends "Contact List"
                     ContactBusinessRelation: Record "Contact Business Relation";
 
                 begin
-                    /*Clear(TempContactRec);
-                    TempContactRec.DeleteAll();
-
-                    // Adjust the filters based on your data structure
-                    ContactRec.SetRange("Company No.", '');*/
                     ContactBusinessRelation.SetRange("Link to Table", ContactBusinessRelation."Link to Table"::"Bank Account");
-
-
                     if ContactRec.FindSet() then
                         repeat
                             TempContactRec := ContactRec;
                             TempContactRec.Insert();
                         until ContactRec.Next() = 0;
-
                     Page.RunModal(Page::Zyn_ReadonlyContactsList, TempContactRec);
                 end;
             }
+        }
+
+
+        modify(Customer)
+        {
+            trigger OnBeforeAction()
+            var
+                SingleInstanceMgt: Codeunit "Zyn_Single Instance Management";
+            begin
+                SingleInstanceMgt.SetFromCreateAs();
+            end;
+        }
+
+        modify(Vendor)
+        {
+            trigger OnBeforeAction()
+            var
+                SingleInstanceMgt: Codeunit "Zyn_Single Instance Management";
+            begin
+                SingleInstanceMgt.SetFromCreateAs();
+            end;
         }
     }
 }

@@ -20,14 +20,13 @@ page 50127 Zyn_TodayVisitorsCuePart
 
                     trigger OnDrillDown()
                     var
-                        // CustomerList: Page "Customer List";
                         Visit: Record Zyn_VisitLog;
                         Customer: Record Customer;
                         Tempcustomer: Record Customer temporary;
 
                     begin
+                        Visit.Reset();
                         Visit.SetRange("Visit Date", WorkDate());
-
                         if Visit.FindSet() then begin
                             repeat
                                 if Customer.Get(Visit."Customer No.") then begin

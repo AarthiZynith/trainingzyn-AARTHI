@@ -16,22 +16,8 @@ codeunit 50253 "Zyn_MirrorCompanyContactSyn"
         end;
     end;
 
-    // Prevent modification in slave company
-    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnBeforeModifyEvent', '', true, true)]
-    local procedure ContactOnBeforeModify(var Rec: Record Contact; var xRec: Record Contact; RunTrigger: Boolean)
-    var
-        ZynCompany: Record "Zyn_Company";
-    begin
-        if ZynCompany.Get(CompanyName()) then
-            if (not ZynCompany.IsMaster) and (ZynCompany.MasterCompanyName <> '') then begin
-                //  Allow if Modify is called with RunTrigger = FALSE
-                // (typical when BC is creating Customer/Vendor)
-                if RunTrigger then
-                    Error(
-                      'You cannot modify contacts in a slave company. ' +
-                      'Modify contacts only in the master company.');
-            end;
-    end;
+
+
 
     [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterInsertEvent', '', true, true)]
     local procedure ContactOnAfterInsert(var Rec: Record Contact; RunTrigger: Boolean)
@@ -65,6 +51,68 @@ codeunit 50253 "Zyn_MirrorCompanyContactSyn"
         IsSyncing := false;
     end;
 
+
+    // // Prevent modification in slave company
+    // [EventSubscriber(ObjectType::Table, Database::Contact, 'OnBeforeModifyEvent', '', true, true)]
+    // local procedure ContactOnBeforeModify(var Rec: Record Contact; var xRec: Record Contact; RunTrigger: Boolean)
+    // var
+    //     ZynCompany: Record "Zyn_Company";
+    // begin
+    //     if ZynCompany.Get(CompanyName()) then
+    //         if (not ZynCompany.IsMaster) and (ZynCompany.MasterCompanyName <> '') then begin
+    //             //  Allow if Modify is called with RunTrigger = FALSE
+    //             // (typical when BC is creating Customer/Vendor)
+    //             if RunTrigger then
+    //                 Error(
+    //                   'You cannot modify contacts in a slave company. ' +
+    //                   'Modify contacts only in the master company.');
+    //         end;
+    // end;
+
+    // [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterModifyEvent', '', true, true)]
+    // local procedure ContactOnAfterModify(var Rec: Record Contact; var xRec: Record Contact; RunTrigger: Boolean)
+    // var
+    //     MasterCompany: Record Zyn_Company;
+    //     SlaveCompany: Record Zyn_Company;
+    //     SlaveContact: Record Contact;
+    // begin
+    //     if IsSyncing then
+    //         exit;
+
+    //     IsSyncing := true; // set flag at the start
+
+    //     if MasterCompany.Get(CompanyName()) and MasterCompany."IsMaster" then begin
+    //         SlaveCompany.SetRange(MasterCompanyName, MasterCompany.Name);
+    //         if SlaveCompany.FindSet() then
+    //             repeat
+    //                 SlaveContact.ChangeCompany(SlaveCompany.Name);
+    //                 if SlaveContact.Get(Rec."No.") then begin
+    //                     // Only transfer fields that changed
+    //                     SlaveContact.TransferFields(Rec, false);
+    //                     // ❌ Do not run triggers to avoid recursion
+    //                     SlaveContact.Modify(false);
+    //                 end;
+    //             until SlaveCompany.Next() = 0;
+    //     end;
+
+    //     IsSyncing := false; // reset at the end
+    // end;
+
+    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnBeforeModifyEvent', '', true, true)]
+    local procedure ContactOnBeforeModify(var Rec: Record Contact; var xRec: Record Contact; RunTrigger: Boolean)
+    var
+        ZynCompany: Record "Zyn_Company";
+    begin
+        if ZynCompany.Get(CompanyName()) then
+            if (not ZynCompany.IsMaster) and (ZynCompany.MasterCompanyName <> '') then begin
+                // Allow internal sync to proceed
+                if RunTrigger then
+                    Error(
+                      'You cannot modify contacts in a slave company. ' +
+                      'Modify contacts only in the master company.');
+            end;
+    end;
+
     [EventSubscriber(ObjectType::Table, Database::Contact, 'OnAfterModifyEvent', '', true, true)]
     local procedure ContactOnAfterModify(var Rec: Record Contact; var xRec: Record Contact; RunTrigger: Boolean)
     var
@@ -77,51 +125,86 @@ codeunit 50253 "Zyn_MirrorCompanyContactSyn"
         SlaveField: FieldRef;
         i: Integer;
         IsDifferent: Boolean;
+        slavebusinessrelation: Enum "Contact Business Relation";
+        ZynCompany: Record Zyn_Company;
+        SingleInstanceMgt: Codeunit "Zyn_Single Instance Management";
     begin
+        // Validation: prevent recursive sync
         if IsSyncing then
             exit;
+        if SingleInstanceMgt.GetFromCreateAs() then begin
+            SingleInstanceMgt.ClearCreateAs();
+            exit;
+        end;
+
+        // Condition: master company exists
         if MasterCompany.Get(COMPANYNAME) then begin
-            if MasterCompany."IsMaster" then begin
+            // Validation: only replicate if master
+            if MasterCompany.IsMaster then begin
+                // Set filter: find slave companies for this master
                 SlaveCompany.Reset();
                 SlaveCompany.SetRange(MasterCompanyName, MasterCompany.Name);
+
+                // Loop: iterate slave companies
                 if SlaveCompany.FindSet() then
                     repeat
                         SlaveContact.ChangeCompany(SlaveCompany.Name);
+
+                        // Condition: contact exists in slave
                         if SlaveContact.Get(Rec."No.") then begin
-                            // Open RecordRefs
+                            //slavebusinessrelation := SlaveContact."Contact Business Relation";
+
+                            // Open RecordRefs for comparison
                             MasterRef.GetTable(Rec);
                             SlaveRef.GetTable(SlaveContact);
                             IsDifferent := false;
-                            // Loop through all fields
+
+                            // Loop: compare all fields
                             for i := 1 to MasterRef.FieldCount do begin
                                 Field := MasterRef.FieldIndex(i);
-                                // Skip FlowFields or non-normal fields
+
+                                // Condition: skip non-normal or primary key fields
                                 if Field.Class <> FieldClass::Normal then
                                     continue;
-                                // Skip primary key fields (like "No.")
                                 if Field.Number in [1] then
                                     continue;
+
                                 SlaveField := SlaveRef.Field(Field.Number);
+
+                                // Validation: check difference
                                 if SlaveField.Value <> Field.Value then begin
                                     IsDifferent := true;
-                                    break; // no need to check further
+                                    break; // exit loop if different
                                 end;
                             end;
-                            // Only transfer fields if there is a difference
+
+                            // Condition: only transfer fields if different
                             if IsDifferent then begin
                                 IsSyncing := true;
                                 SlaveContact.TransferFields(Rec, false);
+                                //SlaveContact."Contact Business Relation" := slavebusinessrelation;
                                 SlaveContact."No." := Rec."No."; // restore PK
                                 SlaveContact.Modify(true);
                                 IsSyncing := false;
                             end;
                         end;
-                    until SlaveCompany.Next() = 0;
+                    until SlaveCompany.Next() = 0; // Loop ends
+
+            end else begin
+                // Condition: handle non-master companies
+                if ZynCompany.Get(Rec."Company Name") then begin
+                    if (not ZynCompany.IsMaster) and (ZynCompany.MasterCompanyName <> '') then
+                        Error(CreateContactInSlaveErr);
+                end else begin
+                    if not RunTrigger then
+                        exit;
+                    if Rec."Contact Business Relation" <> xRec."Contact Business Relation" then
+                        exit;
+                    Error(CreateContactInSlaveErr);
+                end;
             end;
         end;
     end;
-
-
 
     [EventSubscriber(ObjectType::Table, Database::Contact, 'OnBeforeDeleteEvent', '', true, true)]
     local procedure ContactOnBeforeDelete(var Rec: Record Contact; RunTrigger: Boolean)

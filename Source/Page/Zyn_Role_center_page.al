@@ -39,7 +39,7 @@ page 50120 Zyn_VisitManagerRoleCenter
         }
         area(Sections)
         {
-            group("Employee Asset Management")
+            group("EmployeeAssetMang")
             {
                 action(AssetTypeList)
                 {
@@ -59,7 +59,7 @@ page 50120 Zyn_VisitManagerRoleCenter
             }
 
 
-            group("Expense Management System")
+            group("ExpenseMang")
             {
                 action(ExpenseList)
                 {
@@ -72,7 +72,7 @@ page 50120 Zyn_VisitManagerRoleCenter
                     ApplicationArea = All;
                 }
             }
-            group("Budget Management System")
+            group("BudgetMang")
             {
                 action(BudgetList)
                 {
@@ -80,7 +80,7 @@ page 50120 Zyn_VisitManagerRoleCenter
                     ApplicationArea = All;
                 }
             }
-            group("Income Management System ")
+            group("IncomeMang")
             {
                 action(IncomePage)
                 {
@@ -93,7 +93,7 @@ page 50120 Zyn_VisitManagerRoleCenter
                     ApplicationArea = All;
                 }
             }
-            group("Employee Leave Management")
+            group("EmployeeLeaveMang")
             {
 
                 Action(EmployeeList)
@@ -113,7 +113,7 @@ page 50120 Zyn_VisitManagerRoleCenter
                 }
             }
 
-            group("Subscription Billing Management")
+            group("SubscripBillingMang")
             {
                 action(SubscriptionListPage)
                 {

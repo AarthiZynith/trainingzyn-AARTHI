@@ -10,7 +10,6 @@ pageextension 50135 Zyn_ReoleCenterExt extends "Business Manager Role Center"
             {
                 RunObject = page Zyn_TechnicianList;
                 ApplicationArea = All;
-
             }
         }
     }

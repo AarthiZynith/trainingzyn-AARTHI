@@ -46,7 +46,6 @@ pageextension 50102 Zyn_CustomerCardExte extends "Customer Card"
                 begin
                     // ✅ Manually filter by table and customer number
                     ChangeLogEntry.SetRange("Customer No.", Rec."No.");
-
                     PAGE.RunModal(PAGE::Zyn_CustomerModifyLogList, ChangeLogEntry);
                 end;
             }
